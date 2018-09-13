@@ -7,6 +7,7 @@ const app= express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('public'))
+app.set('view engine', 'ejs');
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -105,6 +106,35 @@ app.get('/', function(req,res){
     res.redirect('/success?username='+req.user.username);
   });
 
+  app.get('/find', function(req,res){
+    res.sendFile(__dirname +'/views/find.html');});
+
+    app.get('/details', function(req,res){
+        res.render('details');});
+    
+
+  app.post('/search', function(req,res){
+    
+  /* var cursor=db.collection('patient').find().toArray(function(err,results){
+           console.log(results)
+   console.log(cursor);
+});*/ 
+        Patients.find({name:req.body.name})
+        .then((data)=>{
+            var photos=[];  
+          // console.log(data);
+          data.forEach(function(item){
+            photos= photos.concat(item.quote)});
+            //  res.render('collection', {pics: photos})});
+           res.render('details',{pics: photos,name:data[0].name});
+          console.log(photos);
+         })
+        .catch((err)=>{
+          console.log(err);
+        })
+    });
+ 
+
 app.post('/add', function(req,res){
     //console.log(req.body);
 
@@ -117,7 +147,20 @@ app.post('/add', function(req,res){
 }
 console.log('Saved to database');
 res.redirect('/');
-*/});
+*/
+const patient = new Patients({
+    name: req.body.name , 
+    quote: req.body.quote});
+
+
+patient.save()
+.then((data)=> {
+  console.log(data);
+  res.send('Saved to database');
+ })
+.catch((err)=> {
+  console.log(err);
+})});
 /*
 
 app.post('/addsupplies', function(req,res){
@@ -132,10 +175,10 @@ collection.save(req.body),(err, result)=>{
 }
 console.log('Saved to database');
 res.redirect('/');
-});
+}); */
 
 
-app.put('/quotes',(req,res)=>{
+app.put('/details',(req,res)=>{/*
     db.collection('patient').findOneAndUpdate({name: 'ray'},{
         $set:{
         name:req.body.name,
@@ -147,16 +190,22 @@ app.put('/quotes',(req,res)=>{
         if (err) return res.send(err)
         res.send(result)
     })
-})
+})*/
+console.log(req.body.name);
+/*Patients.findOneAndUpdate({name:req.body.name}, {$set: req.body}, function (err, patient) {
+    if (err) return res.send(err);
+    res.send('Patient Data udpated.');
+});*/
+});
 
 
 app.delete('/quotes', (req,res)=>{
-    db.collection('patient').findOneAndDelete({name: req.body.name},
+   /* db.collection('patient').findOneAndDelete({name: req.body.name},
         (err, result)=>{
         if (err) return res.send(err)
         res.send({message: 'A darth vadar quote got deleted'})
-    })   
-})  */
+    })*/  
+})  
 app.listen(3000, ()=>{
  console.log('Listening on port 3000');
    
