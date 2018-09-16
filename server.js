@@ -1,5 +1,7 @@
 const express= require('express');
 const bodyParser= require('body-parser');
+//const cookieParser= require('cookie-parser');
+const session = require('express-session')
 //const MongoClient= require('mongodb').MongoClient;
 const passport =require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -7,7 +9,15 @@ const app= express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('public'))
+//app.use(cookieParser())
 app.set('view engine', 'ejs');
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -31,7 +41,9 @@ const UserDetails = mongoose.model('UserInfo', UserDetail, 'UserInfo');
 
 const Patient = new Schema({
       name: String,
+      date:String,
       quote: String
+
     });
 const Patients = mongoose.model('patient', Patient, 'patient');
 
@@ -73,11 +85,11 @@ passport.use(new LocalStrategy(
       });
     }); 
 
-    app.get('/success', (req, res) => res.send("Welcome "+req.query.username+"!!"));
+    app.get('/success', (req, res) => res.sendFile(__dirname +'/views/main.html'));
     app.get('/error', (req, res) => res.send("error logging in")); 
  
 
-app.get('/', function(req,res){
+app.get('/', checkAuthentication,function(req,res){
     res.sendFile(__dirname +'/views/index.html');
   /* var cursor=db.collection('patient').find().toArray(function(err,results){
            console.log(results)
@@ -103,10 +115,11 @@ app.get('/', function(req,res){
   app.post('/login',
   passport.authenticate('local', { failureRedirect: '/error' }),
   function(req, res) {
+
     res.redirect('/success?username='+req.user.username);
   });
 
-  app.get('/find', function(req,res){
+  app.get('/find',checkAuthentication, function(req,res){
     res.sendFile(__dirname +'/views/find.html');});
 
     app.get('/details', function(req,res){
@@ -125,8 +138,12 @@ app.get('/', function(req,res){
           // console.log(data);
           data.forEach(function(item){
             photos= photos.concat(item.quote)});
+            var dates=[];  
+            // console.log(data);
+            data.forEach(function(item){
+              dates= dates.concat(item.date)});
             //  res.render('collection', {pics: photos})});
-           res.render('details',{pics: photos,name:data[0].name});
+           res.render('details',{pics: photos,name:data[0].name, data:data, date:dates});
           console.log(photos);
          })
         .catch((err)=>{
@@ -149,7 +166,8 @@ console.log('Saved to database');
 res.redirect('/');
 */
 const patient = new Patients({
-    name: req.body.name , 
+    name: req.body.name ,
+    date:req.body.date,
     quote: req.body.quote});
 
 
@@ -206,6 +224,17 @@ app.delete('/quotes', (req,res)=>{
         res.send({message: 'A darth vadar quote got deleted'})
     })*/  
 })  
+
+function checkAuthentication(req,res,next){
+    if(req.isAuthenticated()){
+        //req.isAuthenticated() will return true if user is logged in
+       
+        return next();
+    } else{
+        res.redirect("/login");
+    }
+}
+
 app.listen(3000, ()=>{
  console.log('Listening on port 3000');
    
