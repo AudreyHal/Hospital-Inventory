@@ -3,8 +3,8 @@ const bodyParser= require('body-parser');
 //const cookieParser= require('cookie-parser');
 const session = require('express-session')
 //const MongoClient= require('mongodb').MongoClient;
-const passport =require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+//const passport =require('passport');
+//const LocalStrategy = require('passport-local').Strategy;
 const app= express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -14,13 +14,13 @@ app.set('view engine', 'ejs');
 
 app.use(session({
     secret: 'keyboard cat',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
   }))
 
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 /*MongoClient.connect("mongodb://localhost:27017", (err,client)=>{
     if (err) return console.log(err);
@@ -51,7 +51,7 @@ const Patients = mongoose.model('patient', Patient, 'patient');
 //db.close();
 //var db= client.db('hospital');
 
-passport.use(new LocalStrategy(
+/*passport.use(new LocalStrategy(
     function(username, password, done) {
         UserDetails.findOne({
           username: username
@@ -71,11 +71,11 @@ passport.use(new LocalStrategy(
         });
     }
   ));
-
+*/
  
   
   //Passport Sessions
-  passport.serializeUser(function(user, done) {
+  /*passport.serializeUser(function(user, done) {
       done(null, user.id);
     });
      
@@ -88,9 +88,90 @@ passport.use(new LocalStrategy(
     app.get('/success', (req, res) => res.sendFile(__dirname +'/views/main.html'));
     app.get('/error', (req, res) => res.send("error logging in")); 
  
+*/
 
-app.get('/', checkAuthentication,function(req,res){
-    res.sendFile(__dirname +'/views/index.html');
+ 
+
+
+
+  app.get('/login', function(req, res) {
+    res.sendFile(__dirname +'/views/login.html');
+  });
+
+  app.post('/login', 
+ /* passport.authenticate('local', { failureRedirect: '/error' }),
+  function(req, res) {
+
+    res.redirect('/success?username='+req.user.username);
+  });*/
+  
+  function(req, res) {
+    var username= req.body.username
+    var password= req.body.password
+    UserDetails.findOne({
+      username: username
+    }, function(err, user) {
+      if (err) {
+        console.log(err);
+      } 
+
+      if (!user) {
+        res.send('User not found');
+      }
+
+      if(user){
+
+       if (user.password != password){
+        res.send('wrong');
+      } 
+     /// return done(null, user);
+        req.session.user = user;
+        req.session.user.expires = new Date(
+            Date.now() + 3 * 24 * 3600 * 1000); // session expires in 3 days
+            //console.log(req.session.user)
+          res.redirect('/');}
+    });});
+
+    /*UserDetails.findOne({
+    username: username 
+  }, function(err, user) {
+    if (err) {
+      return done(err);
+    }
+
+    if (!user) {
+      return done(null, false);
+    }
+
+    if (user.password == password){
+        req.session.user = {
+            username: req.user.username,
+            id: req.user.id
+          }; // saving some user's data into user's session
+          req.session.user.expires = new Date(
+            Date.now() + 3 * 24 * 3600 * 1000); // session expires in 3 days
+          
+          res.status(200).send('You are logged in, Welcome!');
+  }else {
+    res.send('incorrect password');
+}
+});});*/
+
+app.use((req, res, next) => {
+    console.log(req.session.user)
+    if (req.session.user) {
+      next();
+    } else {
+      res.status(401).send('Authrization failed! Please login');
+    }
+  });
+
+  app.get('/',function(req,res){
+    res.send(`You are seeing this because you have a valid session.
+    Your username is ${req.session.user.username} 
+    and email is ${req.session.user.email}.
+`)
+  //  res.sendFile(__dirname +'/views/index.html');
   /* var cursor=db.collection('patient').find().toArray(function(err,results){
            console.log(results)
    console.log(cursor);
@@ -104,22 +185,8 @@ app.get('/', checkAuthentication,function(req,res){
           console.log(err);
         })
     });
- 
 
-
-
-  app.get('/login', function(req, res) {
-    res.sendFile(__dirname +'/views/login.html');
-  });
-
-  app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/error' }),
-  function(req, res) {
-
-    res.redirect('/success?username='+req.user.username);
-  });
-
-  app.get('/find',checkAuthentication, function(req,res){
+  app.get('/find', function(req,res){
     res.sendFile(__dirname +'/views/find.html');});
 
     app.get('/details', function(req,res){
@@ -225,7 +292,7 @@ app.delete('/quotes', (req,res)=>{
     })*/  
 })  
 
-function checkAuthentication(req,res,next){
+/*function checkAuthentication(req,res,next){
     if(req.isAuthenticated()){
         //req.isAuthenticated() will return true if user is logged in
        
@@ -233,7 +300,7 @@ function checkAuthentication(req,res,next){
     } else{
         res.redirect("/login");
     }
-}
+}*/
 
 app.listen(3000, ()=>{
  console.log('Listening on port 3000');
