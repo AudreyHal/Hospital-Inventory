@@ -167,11 +167,14 @@ app.use((req, res, next) => {
   });
 
   app.get('/',function(req,res){
-    res.send(`You are seeing this because you have a valid session.
+   /* res.send(`You are seeing this because you have a valid session.
     Your username is ${req.session.user.username} 
-    and email is ${req.session.user.email}.
-`)
-  //  res.sendFile(__dirname +'/views/index.html');
+    and email is ${req.session.user.email, }.
+   
+`)*/var name=[];
+name.push(req.session.user.username);
+    
+    res.render('index', {names:name[0]} );
   /* var cursor=db.collection('patient').find().toArray(function(err,results){
            console.log(results)
    console.log(cursor);
