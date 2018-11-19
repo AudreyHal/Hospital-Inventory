@@ -100,6 +100,9 @@ body{
    
     
 }
+.white{color:white}
+.black{color:black;
+padding-top: 10px}
 
 @media only screen and (min-width:768px){
     .box{
