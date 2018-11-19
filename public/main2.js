@@ -7,7 +7,7 @@ update.addEventListener('click', function(){
         method:'put',
         headers:{'Content-type':'application/json'},
         body:JSON.stringify({
-            'name':document.getElementById('name'),
+            'name':document.getElementById('name').text,
             'quote':document.getElementById('text')+' '+ document.getElementById('quote')
         })
     })

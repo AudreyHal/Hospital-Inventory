@@ -1,15 +1,10 @@
 const express= require('express');
 const bodyParser= require('body-parser');
-//const cookieParser= require('cookie-parser');
 const session = require('express-session')
-//const MongoClient= require('mongodb').MongoClient;
-//const passport =require('passport');
-//const LocalStrategy = require('passport-local').Strategy;
 const app= express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('public'))
-//app.use(cookieParser())
 app.set('view engine', 'ejs');
 
 app.use(session({
@@ -19,12 +14,6 @@ app.use(session({
     cookie: { secure: false }
   }))
 
-//app.use(passport.initialize());
-//app.use(passport.session());
-
-/*MongoClient.connect("mongodb://localhost:27017", (err,client)=>{
-    if (err) return console.log(err);
-*/
 
 /* MONGOOSE SETUP */
 
@@ -42,272 +31,180 @@ const UserDetails = mongoose.model('UserInfo', UserDetail, 'UserInfo');
 const Patient = new Schema({
       name: String,
       date:String,
-      quote: String
+      details: String
 
     });
 const Patients = mongoose.model('patient', Patient, 'patient');
 
 
-//db.close();
-//var db= client.db('hospital');
-
-/*passport.use(new LocalStrategy(
-    function(username, password, done) {
-        UserDetails.findOne({
-          username: username
-        }, function(err, user) {
-          if (err) {
-            return done(err);
-          }
-  
-          if (!user) {
-            return done(null, false);
-          }
-  
-          if (user.password != password){
-            return done(null, false);
-          }
-          return done(null, user);
-        });
-    }
-  ));
-*/
- 
-  
-  //Passport Sessions
-  /*passport.serializeUser(function(user, done) {
-      done(null, user.id);
-    });
-     
-    passport.deserializeUser(function(id, done) {
-        UserDetails.findById(id, function (err, user) {
-        done(err, user);
-      });
-    }); 
-
-    app.get('/success', (req, res) => res.sendFile(__dirname +'/views/main.html'));
-    app.get('/error', (req, res) => res.send("error logging in")); 
- 
-*/
-
- 
-
-
-
-  app.get('/login', function(req, res) {
-    res.sendFile(__dirname +'/views/login.html');
+  app.get('/', function(req, res) {
+    res.render('login',{ alert:"none", msg:"0"})
   });
 
-  app.post('/login', 
- /* passport.authenticate('local', { failureRedirect: '/error' }),
-  function(req, res) {
-
-    res.redirect('/success?username='+req.user.username);
-  });*/
-  
-  function(req, res) {
+  app.post('/', 
+   function(req, res) {
     var username= req.body.username
     var password= req.body.password
+
+
+    if (!req.body.username ||!req.body.password) {
+      res.render('login',{ alert:"block", msg:"Please fill all required fields"})}
+
+      else{
     UserDetails.findOne({
       username: username
     }, function(err, user) {
-      if (err) {
-        console.log(err);
-      } 
+      if (err) 
+      { res.render('login',{ alert:"block", msg:"An error occured. Please try again"});
+
+            } 
 
       if (!user) {
-        res.send('User not found');
+        res.render('login',{ alert:"block", msg:"User not found"})
+        
       }
 
       if(user){
 
        if (user.password != password){
-        res.send('wrong');
-      } 
-     /// return done(null, user);
+        res.render('login',{ alert:"block", msg:"Incorrect Password"})
+      } else{
+    
         req.session.user = user;
         req.session.user.expires = new Date(
             Date.now() + 3 * 24 * 3600 * 1000); // session expires in 3 days
-            //console.log(req.session.user)
-          res.redirect('/');}
-    });});
+           
+          res.redirect('/main');}}
+    });}});
 
-    /*UserDetails.findOne({
-    username: username 
-  }, function(err, user) {
-    if (err) {
-      return done(err);
-    }
-
-    if (!user) {
-      return done(null, false);
-    }
-
-    if (user.password == password){
-        req.session.user = {
-            username: req.user.username,
-            id: req.user.id
-          }; // saving some user's data into user's session
-          req.session.user.expires = new Date(
-            Date.now() + 3 * 24 * 3600 * 1000); // session expires in 3 days
-          
-          res.status(200).send('You are logged in, Welcome!');
-  }else {
-    res.send('incorrect password');
-}
-});});*/
-
+ 
 app.use((req, res, next) => {
     console.log(req.session.user)
     if (req.session.user) {
       next();
     } else {
-      res.status(401).send('Authrization failed! Please login');
+     res.redirect("/")
     }
   });
 
-  app.get('/',function(req,res){
-   /* res.send(`You are seeing this because you have a valid session.
-    Your username is ${req.session.user.username} 
-    and email is ${req.session.user.email, }.
-   
-`)*/var name=[];
+  app.get('/main',function(req,res){
+ var name=[];
 name.push(req.session.user.username);
     
     res.render('index', {names:name[0]} );
-  /* var cursor=db.collection('patient').find().toArray(function(err,results){
-           console.log(results)
-   console.log(cursor);
-});*/
-
-        Patients.find({})
-        .then((data)=>{
-           console.log(data);
-         })
-        .catch((err)=>{
-          console.log(err);
-        })
+ 
     });
 
-  app.get('/find', function(req,res){
-    res.sendFile(__dirname +'/views/find.html');});
+  app.get('/find', function(req,res){ 
+    res.render('find',{ alert:"none", msg:""});});
+
+    app.get('/add', function(req,res){
+      res.render('add',{ alert:"none", msg:"",status:"success"});});
+  
 
     app.get('/details', function(req,res){
         res.render('details');});
+
+     
+
+        app.post('/details', function(req,res){
+          res.render('last',{date:'req.body.date'});});
+
+          app.get('/last', function(req,res){
+            res.sendFile(__dirname +'/views/last.html');});
+
+            app.get('/delete', function(req,res){
+              res.render('delete',{ alert:"none", msg:"",status:"success"});});
+
+            
+
+              app.post('/delete', function(req,res){
+                if (req.body.firstname =="" || req.body.lastname =="" ){ res.render('delete',{msg:"Please fill in empty fields", alert:"block",status:"danger"})}
+               else{
+                 var name=req.body.firstname +" " + req.body.lastname ;
+               var fullname = name.toUpperCase();
+                       Patients.find({name:fullname},function(err,data) {
+                         if(err){res.send('try again later')}
+                         if (!data.length){res.render('delete',{msg:'No account with that name exists.', alert:"block", status:"danger"});}
+                       if(data){
+                         console.log(data); 
+                         res.render('confirmation',{data:data});
+                       }
+                        
+                 })
+               }
+               });
+               
+               app.post('/confirmation', function(req,res){
+                var name=req.body.name;
+                
+                  Patients.deleteMany({name:name},function(err,data) {
+                         if(err){res.send('try again later')}
+                        if(data)  {
+                         console.log(data); 
+                         res.render('delete',{msg:'One record deleted.', alert:"block", status:"info"});
+                       }
+                        
+                 })
+               
+               });
     
 
   app.post('/search', function(req,res){
-    
-  /* var cursor=db.collection('patient').find().toArray(function(err,results){
-           console.log(results)
-   console.log(cursor);
-});*/ 
-        Patients.find({name:req.body.name})
-        .then((data)=>{
-            var photos=[];  
-          // console.log(data);
-          data.forEach(function(item){
-            photos= photos.concat(item.quote)});
-            var dates=[];  
-            // console.log(data);
-            data.forEach(function(item){
-              dates= dates.concat(item.date)});
-            //  res.render('collection', {pics: photos})});
-           res.render('details',{pics: photos,name:data[0].name, data:data, date:dates});
-          console.log(photos);
-         })
-        .catch((err)=>{
-          console.log(err);
-        })
-    });
+ if (req.body.firstname =="" || req.body.lastname =="" ){ res.render('find',{msg:"Please fill in empty fields", alert:"block"})}
+else{
+  var name=req.body.firstname +" " + req.body.lastname ;
+var fullname = name.toUpperCase();
+        Patients.find({name:fullname},function(err,data) {
+          if(err){res.send('try again later')}
+        if (!data.length) {res.render('find',{msg:'No account with that name exists.', alert:"block"});}
+        else {
+          console.log(data); 
+          res.render('details',{data:data});
+        }
+         
+  })
+}
+});
  
 
 app.post('/add', function(req,res){
-    //console.log(req.body);
+  if (req.body.firstname =="" || req.body.lastname =="" || req.body.date =="" || req.body.details =="" ){ 
+    res.render('add',{msg:"Please fill in empty fields", alert:"block",status:"danger"})} 
+    else{
+var name=req.body.firstname +" " + req.body.lastname ;
+var fullname = name.toUpperCase();
 
-
-//var collection=db.collection('patient');
-/*collection.save(req.body),(err, result)=>{
-    if (err) return console.log(err);
-   
-   
-}
-console.log('Saved to database');
-res.redirect('/');
-*/
 const patient = new Patients({
-    name: req.body.name ,
+    name: fullname ,
     date:req.body.date,
-    quote: req.body.quote});
+    details: req.body.details});
 
 
 patient.save()
 .then((data)=> {
   console.log(data);
-  res.send('Saved to database');
+  res.render('add',{msg:"Saved to database", alert:"block", status:"success"})
  })
 .catch((err)=> {
   console.log(err);
-})});
-/*
+})}});
 
-app.post('/addsupplies', function(req,res){
-    //console.log(req.body);
-
-
-var collection=db.collection('supplies');
-collection.save(req.body),(err, result)=>{
-    if (err) return console.log(err);
-   
-   
-}
-console.log('Saved to database');
-res.redirect('/');
-}); */
-
-
-app.put('/details',(req,res)=>{/*
-    db.collection('patient').findOneAndUpdate({name: 'ray'},{
-        $set:{
-        name:req.body.name,
-        quote:req.body.quote}
-        },
-        {sort:{id:-1},
-        upsert:true
-    },(err, result)=>{
-        if (err) return res.send(err)
-        res.send(result)
-    })
-})*/
-console.log(req.body.name);
-/*Patients.findOneAndUpdate({name:req.body.name}, {$set: req.body}, function (err, patient) {
-    if (err) return res.send(err);
-    res.send('Patient Data udpated.');
-});*/
+app.get('/logout',function(req,res){
+  if(req.session){
+      //delete session object
+      req.session.destroy(function(err){
+          if(err){res.send("An error occured");}
+          else{
+              return res.redirect('/')
+          }
+      })
+  }
 });
-
-
-app.delete('/quotes', (req,res)=>{
-   /* db.collection('patient').findOneAndDelete({name: req.body.name},
-        (err, result)=>{
-        if (err) return res.send(err)
-        res.send({message: 'A darth vadar quote got deleted'})
-    })*/  
-})  
-
-/*function checkAuthentication(req,res,next){
-    if(req.isAuthenticated()){
-        //req.isAuthenticated() will return true if user is logged in
-       
-        return next();
-    } else{
-        res.redirect("/login");
-    }
-}*/
-
 app.listen(3000, ()=>{
  console.log('Listening on port 3000');
    
     
 });
 
+                  
