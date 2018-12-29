@@ -2,6 +2,8 @@ const express= require('express');
 const bodyParser= require('body-parser');
 const session = require('express-session')
 const app= express();
+const port=process.env.PORT || 3000
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('public'))
@@ -40,7 +42,7 @@ const Patients = mongoose.model('patient', Patient, 'patient');
   app.get('/', function(req, res) {
     res.render('login',{ alert:"none", msg:"0"})
   });
-
+ 
   app.post('/', 
    function(req, res) {
     var username= req.body.username
@@ -106,13 +108,7 @@ name.push(req.session.user.username);
         res.render('details');});
 
      
-
-        app.post('/details', function(req,res){
-          res.render('last',{date:'req.body.date'});});
-
-          app.get('/last', function(req,res){
-            res.sendFile(__dirname +'/views/last.html');});
-
+          
             app.get('/delete', function(req,res){
               res.render('delete',{ alert:"none", msg:"",status:"success"});});
 
@@ -125,9 +121,8 @@ name.push(req.session.user.username);
                var fullname = name.toUpperCase();
                        Patients.find({name:fullname},function(err,data) {
                          if(err){res.send('try again later')}
-                         if (!data.length){res.render('delete',{msg:'No account with that name exists.', alert:"block", status:"danger"});}
+                          if (!data.length){res.render('delete',{msg:'No account with that name exists.', alert:"block", status:"danger"});}
                        if(data){
-                         console.log(data); 
                          res.render('confirmation',{data:data});
                        }
                         
@@ -141,7 +136,6 @@ name.push(req.session.user.username);
                   Patients.deleteMany({name:name},function(err,data) {
                          if(err){res.send('try again later')}
                         if(data)  {
-                         console.log(data); 
                          res.render('delete',{msg:'One record deleted.', alert:"block", status:"info"});
                        }
                         
@@ -183,11 +177,10 @@ const patient = new Patients({
 
 patient.save()
 .then((data)=> {
-  console.log(data);
-  res.render('add',{msg:"Saved to database", alert:"block", status:"success"})
+    res.render('add',{msg:"Saved to database", alert:"block", status:"success"})
  })
 .catch((err)=> {
-  console.log(err);
+ res.send('add',{msg:"An error Occured", alert:"block", status:"danger"});
 })}});
 
 app.get('/logout',function(req,res){
@@ -201,8 +194,8 @@ app.get('/logout',function(req,res){
       })
   }
 });
-app.listen(3000, ()=>{
- console.log('Listening on port 3000');
+app.listen(port, ()=>{
+// console.log('Listening on port 3000');
    
     
 });
