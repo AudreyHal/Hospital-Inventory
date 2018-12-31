@@ -3,6 +3,8 @@ const bodyParser= require('body-parser');
 const session = require('express-session')
 const app= express();
 const port=process.env.PORT || 3000
+const dotenv=require('dotenv').config({silent:true});
+dotenv.config();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -22,7 +24,7 @@ app.use(session({
 const mongoose = require('mongoose');
 var url1='mongodb://localhost/hospital';
 var url2='mongodb://admin1:admin1@ds145584.mlab.com:45584/escor-hospital';
-var url=process.env.MONGOLAB_URI;
+var url=process.env.MONGO_URI;
 mongoose.connect(url);
 
 const Schema = mongoose.Schema;
