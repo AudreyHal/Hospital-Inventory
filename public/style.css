@@ -26,6 +26,8 @@ body{
     width:90%;
     
 }
+
+
 .box2{
     background-color:white;
     border: 1px black;
@@ -84,7 +86,7 @@ body{
     right:0;
    
 }
-.span{ color: white;}
+.span{ color: rgb(255, 255, 255)}
 .submit{
     margin-top: 15px;
 }
@@ -115,6 +117,8 @@ padding-top: 10px}
         margin-top: 120px;
         width:40%;
     }
+
+   
     .box2{
         background-color:white;
         border: 1px black;

@@ -15,12 +15,15 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
   }))
-
+ 
 
 /* MONGOOSE SETUP */
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/hospital');
+var url1='mongodb://localhost/hospital';
+var url2='mongodb://admin1:admin1@ds145584.mlab.com:45584/escor-hospital';
+var url=process.env.MONGOLAB_URI;
+mongoose.connect(url);
 
 const Schema = mongoose.Schema;
 const UserDetail = new Schema({
@@ -45,7 +48,7 @@ const Patients = mongoose.model('patient', Patient, 'patient');
  
   app.post('/', 
    function(req, res) {
-    var username= req.body.username
+    var username= req.body.username 
     var password= req.body.password
 
 
@@ -81,8 +84,7 @@ const Patients = mongoose.model('patient', Patient, 'patient');
 
  
 app.use((req, res, next) => {
-    console.log(req.session.user)
-    if (req.session.user) {
+      if (req.session.user) {
       next();
     } else {
      res.redirect("/")
@@ -136,7 +138,7 @@ name.push(req.session.user.username);
                   Patients.deleteMany({name:name},function(err,data) {
                          if(err){res.send('try again later')}
                         if(data)  {
-                         res.render('delete',{msg:'One record deleted.', alert:"block", status:"info"});
+                         res.render('delete',{msg:'One record deleted.', alert:"block", status:"success"});
                        }
                         
                  })
