@@ -22,8 +22,7 @@ app.use(session({
 /* MONGOOSE SETUP */
 
 const mongoose = require('mongoose');
-var url1='mongodb://localhost/hospital';
-var url2='mongodb://admin1:admin1@ds145584.mlab.com:45584/escor-hospital';
+
 var url=process.env.MONGO_URI;
 mongoose.connect(url);
 
