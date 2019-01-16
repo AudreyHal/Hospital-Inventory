@@ -123,7 +123,9 @@ name.push(req.session.user.username);
                  var name=req.body.firstname +" " + req.body.lastname ;
                var fullname = name.toUpperCase();
                        Patients.find({name:fullname},function(err,data) {
-                         if(err){res.send('try again later')}
+                         if(err)
+                         
+                         {res.render('delete',{msg:'An Error Occured', alert:"block", status:"danger"})}
                           if (!data.length){res.render('delete',{msg:'No account with that name exists.', alert:"block", status:"danger"});}
                        if(data){
                          res.render('confirmation',{data:data});
@@ -198,7 +200,7 @@ app.get('/logout',function(req,res){
   }
 });
 app.listen(port, ()=>{
-
+  console.log('Server initiated succesfully');
    
     
 });

@@ -4,20 +4,18 @@
       
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
                 <link rel="stylesheet" href="style.css">
-          </head>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            </head>
     <body>
-            <div class="panel">
-                    <div class="row">
-                        <div class="col-sm-6"><a href="/main"><span class="span">Back to Home</span></a></div>
-                        <div class="col-sm-6"><a href="/logout"><span class="span">Log Out</span></a></div>
-                    </div></div>
-                                          
-                        <div class="container-fluid text-center box2">
+                   
+                        <div class="container-fluid text-center box">
                                         <div class ="blue container-fluid">
-                                            <a href="/main"><p class="white1">Escor Hospital</p></a> </div>
-                                        <p class="black"><b> Are you sure you want to delete the all records of this patient</b></p>
-                                          <div class="edit">  
-
+                                            <a href="/main"> <img src="es.png" class="img-fluid slide slideInUp" ></a> </div>
+                                            <div class="frame slide slideInDown">  
+                                        <p class="head"> Are you sure you want to delete the all records of this patient:</p>
+                                         
+                                        <div class="edit">  
                                             <div >
                                                 <% if (data && data.length){ %>
                                                     <form method="POST" action="/confirmation">
@@ -29,7 +27,7 @@
                                             <div class="col-md-6"><a class="btn btn-primary" href="/main" ><b>NO</b></a></div>
                                         </div>
     
-      
+                                    </div>
                      </div> 
         </div> 
      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
