@@ -176,7 +176,13 @@ padding-top: 10px}
         margin-top: 120px;
         width:60%;
     }
-    
+    .back_btn{
+        margin-bottom: 10px
+    }
+    .back_btn2{
+        margin-bottom: 10px;
+        margin-top: 15px
+    }
 
 
 }
