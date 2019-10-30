@@ -1,7 +1,7 @@
 # Hospital-Inventory
 A platform that allows hospitals to store and access all their patient records online.
 
-Note: You can access the prototype version in the link above using the following login details.
+Note: You can access the demo version in the link above using the following login details.
 Username : admin, Password : admin
 
 ## Available Scripts:
@@ -9,7 +9,7 @@ Username : admin, Password : admin
 In the project directory, you can run:
 
 ### npm install
-To install dependencies for the project
+To install dependencies for the project.
 
 ### npm start
 Runs the app in the development mode.
@@ -22,3 +22,7 @@ For example:
 ### //.env
 ### MONGO_URI= mongodb://<dbuser>:<dbpassword>@ds113849.mlab.com:13849/mydb 
 
+
+
+
+___I created this project some time ago but do seasonally update parts of it___.
