@@ -20,9 +20,11 @@ The demo version of the project connects to an mLab MongoDB database. You can al
 
 For example:
 ### //.env
-### MONGO_URI= mongodb://<dbuser>:<dbpassword>@ds113849.mlab.com:13849/mydb 
+### MONGO_URI= mongodb://[dbuser]:[dbpassword]>@ds113849.mlab.com:13849/mydb 
+
+<br />
+<br />
+<br />
 
 
-
-
-___I created this project some time ago but do seasonally update parts of it___.
+<i>I created this project some time ago but do seasonally update parts of it as needed</i>
