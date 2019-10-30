@@ -1,192 +1,208 @@
-.alert{font-size:12px }
-
-
-body{
-    background:linear-gradient(160deg,rgb(250, 130, 50) ,rgb(219, 7, 60),rgb(45, 10, 128));
-     color:rgb(255, 255, 255);
-    
-}
-.blue{
-    background-color:transparent;
-    color: white;
-  padding-top: 10px;
-  padding-bottom:2px ;
-  font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    margin-top: 20px;
-    
-    
+.alert {
+	font-size: 12px
 }
 
-.box{
-    background-color:transparent;
-    border: 1px black;
-    border-radius: 20px;
-    height:70% ;
-    padding-bottom:30px;
-    position: center;
-    margin-top: 120px;
-    width:90% ;
-    
+body {
+	background: linear-gradient(160deg, rgb(250, 130, 50), rgb(219, 7, 60), rgb(45, 10, 128));
+	color: rgb(255, 255, 255);
 }
 
-
-.box2{
-    background-color:transparent;
-    border: 1px black;
-    border-radius: 20px;
-    overflow: auto;
-     height: auto;
-    padding-bottom:30px;
-    position: center;
-    margin-top: 120px;
-    width:90%;
+.blue {
+	background-color: transparent;
+	color: white;
+	padding-top: 10px;
+	padding-bottom: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	margin-top: 20px;
 }
 
-
-.btn{
-    color: rgb(255, 255, 255);
-    font-size: 12px;
-    line-height:16px ;
-    background-color: transparent;
-    border:1px white solid  ;
-    border-radius: 10px;
-    width:100%
-  
+.box {
+	background-color: transparent;
+	border: 1px black;
+	border-radius: 20px;
+	height: 70%;
+	padding-bottom: 30px;
+	position: center;
+	margin-top: 120px;
+	width: 90%;
 }
 
-.btn:hover{
-    background-color:rgb(50, 27, 104);
-
+.box2 {
+	background-color: transparent;
+	border: 1px black;
+	border-radius: 20px;
+	overflow: auto;
+	height: auto;
+	padding-bottom: 30px;
+	position: center;
+	margin-top: 120px;
+	width: 90%;
 }
 
-.comment{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 14px;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    color: rgb(255, 255, 255);
-}
-.comment2{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 14px;
-      padding-bottom: 5px;
-    color: rgb(255, 255, 255);
-}
-.edit{padding-top: 30px;
-    
+.btn {
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+	line-height: 16px;
+	background-color: transparent;
+	border: 1px white solid;
+	border-radius: 10px;
+	width: 100%
 }
 
-
-.frame{
-    
-    padding-top: 80px;
-   
+.btn:hover {
+	background-color: rgb(50, 27, 104);
 }
 
-.frame1{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    padding-top: 35px;
-   
-}
-#firstname{color: white important;}
-.frame1 a{color: rgb(255, 255, 255)}
-.form-group{font-size:5px}
-.form-control{ 
-    background-color:white ; 
-   
-    color: white important;
-    font-size: 10px
-}
-.head{font-size: 14px ; font-family: Georgia, 'Times New Roman', Times, serif;}
-
-.slide{animation-duration: 1s;
-
--o-animation-duration:  1s;
--webkit-animation-duration: 1s;
--ms-animation-duration: 1s;}
-.slidedelay{animation-duration: 2s;
-    
-    -o-animation-duration: 2s;
-    -webkit-animation-duration:2s;
-    -ms-animation-duration: 2s;
-    animation-delay:  1.5s }
-.name{font-size: 20px}
-.nav{background-color:transparent ;}
-.p{
-    border-bottom: 3pxc black;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-}
-.panel{
-    color: white;
- 
-    position: absolute;
-    top:0;
-    right:0;
-   
-} 
-.panel2{ width:300px; 
-    padding-top: 0px;
-   position:right; 
-margin-top:0px}
-.span{ color: rgb(255, 255, 255)}
-.submit{
-    margin-top: 15px;
+.comment {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 14px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	color: rgb(255, 255, 255);
 }
 
-
-.square{
-    margin: 0;
-    position: center;
-    border:1px solid rgb(180, 180, 180);
-    background-color: rgb(180, 180, 180);
-    width:60%;
-    height:70%;
-   
-    
-}
-.white1{color:white}
-.black{color:black;
-padding-top: 10px}
-
-@media only screen and (min-width:768px){
-    .box{
-        background-color:transparent;
-        border: 1px black;
-        border-radius: 20px;
-         height:520px ;
-        padding-bottom:30px;
-        position: center;
-        margin-top: 120px;
-        width:40%;
-    }
-
-   
-    .box2{
-        background-color:white;
-        border: 1px black;
-        border-radius: 20px;
-        overflow: auto;
-        height:520px ;
-        height: auto;
-        padding-bottom:30px;
-        position: center;
-        margin-top: 120px;
-        width:60%;
-    }
-    .back_btn{
-        margin-bottom: 10px
-    }
-    .back_btn2{
-        margin-bottom: 10px;
-        margin-top: 15px
-    }
-
-
+.comment2 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 14px;
+	padding-bottom: 5px;
+	color: rgb(255, 255, 255);
 }
 
+.edit {
+	padding-top: 30px;
+}
 
+.frame {
+	padding-top: 80px;
+}
 
- 
+.frame1 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	padding-top: 35px;
+}
+
+#firstname {
+	color: white important;
+}
+
+.frame1 a {
+	color: rgb(255, 255, 255)
+}
+
+.form-group {
+	font-size: 5px
+}
+
+.form-control {
+	background-color: white;
+	color: white important;
+	font-size: 10px
+}
+
+.head {
+	font-size: 14px;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.slide {
+	animation-duration: 1s;
+	-o-animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+	-ms-animation-duration: 1s;
+}
+
+.slidedelay {
+	animation-duration: 2s;
+	-o-animation-duration: 2s;
+	-webkit-animation-duration: 2s;
+	-ms-animation-duration: 2s;
+	animation-delay: 1.5s
+}
+
+.name {
+	font-size: 20px
+}
+
+.nav {
+	background-color: transparent;
+}
+
+.p {
+	border-bottom: 3pxc black;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+}
+
+.panel {
+	color: white;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.panel2 {
+	width: 300px;
+	padding-top: 0px;
+	position: right;
+	margin-top: 0px
+}
+
+.span {
+	color: rgb(255, 255, 255)
+}
+
+.submit {
+	margin-top: 15px;
+}
+
+.square {
+	margin: 0;
+	position: center;
+	border: 1px solid rgb(180, 180, 180);
+	background-color: rgb(180, 180, 180);
+	width: 60%;
+	height: 70%;
+}
+
+.white1 {
+	color: white
+}
+
+.black {
+	color: black;
+	padding-top: 10px
+}
+
+@media only screen and (min-width:768px) {
+	.box {
+		background-color: transparent;
+		border: 1px black;
+		border-radius: 20px;
+		height: 520px;
+		padding-bottom: 30px;
+		position: center;
+		margin-top: 120px;
+		width: 40%;
+	}
+	.box2 {
+		background-color: white;
+		border: 1px black;
+		border-radius: 20px;
+		overflow: auto;
+		height: 520px;
+		height: auto;
+		padding-bottom: 30px;
+		position: center;
+		margin-top: 120px;
+		width: 60%;
+	}
+	.back_btn {
+		margin-bottom: 10px
+	}
+	.back_btn2 {
+		margin-bottom: 10px;
+		margin-top: 15px
+	}
+}
