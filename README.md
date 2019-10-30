@@ -27,4 +27,4 @@ For example:
 <br />
 
 
-<i>I created this project some time ago but do seasonally update parts of it as needed</i>
+<i>I created this project some time ago but do seasonally update parts of it as needed. Contributions are very welcome.</i>
