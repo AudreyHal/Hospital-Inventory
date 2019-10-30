@@ -1,4 +1,4 @@
-# Hospital-Inventory
+# Hospital-Records-System
 A platform that allows hospitals to store and access all their patient records online.
 
 Note: You can access the demo version in the link above using the following login details.
